@@ -6,7 +6,7 @@ layout: home
 #title: remco.space
 ---
 
-![remco.space headquarters](http://assetts/hq.jpg)
+![remco.space headquarters](/assets/hq.jpg)
 
 Dear visitor,
 
@@ -15,5 +15,6 @@ Space is big, and getting good IT tech support is not easy. Remco.space provides
 Hopefully, you will also visit us at the Galactic Center of the Universe for your super-massive black hole backups and hyper-spatial wormhole Wi-Fi diagnostics soon!
 
 See you there,
+
 remco.space
 
