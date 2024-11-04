@@ -29,7 +29,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  "remco-space" 
 linkedin_username: "remcospace"
 instagram_username: "remco.space"
-email_username: "void@remco.space"
+email_username: "web@remco.space"
 rss: rss
 mastodon:
  - username: remco.space
@@ -38,7 +38,7 @@ mastodon:
 #   instance: example.com
 
 #google_analytics: UA-NNNNNNNN-N
-google_analytics: G-9ZHM3YYS9S
+#google_analytics: G-9ZHM3YYS9S
 
 #header_pages:
 #  -
