@@ -6,7 +6,12 @@ layout: home
 #title: remco.space
 ---
 
-Remco.space provides top-notch IT support for some of the universe’s least manageable clients. Need a hyper-spatial server reset at Milliways, the restaurant where fine dining meets the apocalypse? We’re on it. Dealing with yet another time-loop glitch at the Time Variance Authority? Just another Tuesday for us. And as for the Galactic Centre of the Universe, we like to think we’re the only thing holding it all together between black hole backups and wormhole Wi-Fi diagnostics. So, if your multiverse-scale operations are having technical difficulties, look no further! Remco.space has you covered.
+Dear visitor,
 
+In the vast emptiness of the cosmos, remco.space provides computer and technical support in the more timeless locations. Whether you require a hyper-spatial server reset at Milliways, the restaurant at the end of the Universe, where fine dining meets the ending of time, or assistance with yet another space-time-loop glitch at the Time Variance Authority. 
 
+Hopefully, you will also visit us at The Galactic Center of the Universe, for your super-massive black hole backups and hyper-spatial wormhole Wi-Fi diagnostics
+
+Hope to see you soon,
+remco.space
 
