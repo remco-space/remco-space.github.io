@@ -6,7 +6,7 @@ layout: home
 #title: remco.space
 ---
 
-![remco.space headquarters](/assets/hq.jpg)
+![remco.space headquarters](/assets/hq.jpg){: width="250" }
 
 Dear visitor,
 
