@@ -22,7 +22,7 @@ title: remco.space
 #email: void@remco.space
 author: remco dot space
 description: >- # this means to ignore newlines until "baseurl:"
-  Blog at the galactic center of the universe.
+  Providing IT support for Milliways, the TVA and the Galactic Center of the Universe.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: "" 
