@@ -1,0 +1,8 @@
+Greenpoint Sans
+Designer: Sasha Denisova — https://www.sashadenisova.xyz/greenpointsans
+Released: 2026 (font files dated 2026-04-18). Latin + Cyrillic.
+
+License: the designer states Greenpoint Sans is "a self-initiated project,
+free for both personal and commercial use." Downloaded from the designer's
+official page (greenpoint-sans.zip). Self-hosted: GreenpointSans-Regular (upright)
+as GreenpointSans.woff2. No modifications.
