@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="preconnect" href="https://player.vimeo.com"><link rel="preconnect" href="https://i.vimeocdn.com"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Astrophysics | remco.space</title>
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="Astrophysics" />
@@ -24,7 +24,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"remco dot space"},"description":"Intergalactic space between Milliways, the TVA and the Galactic Center of the Universe.","headline":"Astrophysics","image":"https://remco.space/assets/hq.webp","url":"https://remco.space/astrophysics/"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://remco.space/feed.xml" title="remco.space" /><script data-goatcounter="https://remcospace.goatcounter.com/count"
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://remco.space/feed.xml" title="remco.space" /><link rel="preconnect" href="https://gc.zgo.at"><script data-goatcounter="https://remcospace.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body><header class="site-header" role="banner">
@@ -80,7 +80,7 @@ The marked papers in each list are the ones worth clicking first.</p>
 
 <figure class="fig">
   <div class="video-embed">
-    <iframe src="https://player.vimeo.com/video/45133074?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1&amp;muted=1&amp;loop=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
+    <iframe src="https://player.vimeo.com/video/45133074?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1&amp;muted=1&amp;loop=1" title="Animation: three stellar orbits threading the galaxy NGC 1277" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
   </div>
   <figcaption>Three stellar orbits in <a class="egg" href="https://www.deviantart.com/milk-n-lemonade/art/NGC-1277-680400094">NGC 1277</a>: red whips around the unseen central black hole, green loops through the galaxy, blue drifts in its outskirts. The innermost motion is what gives the black hole's mass away. Animation by van den Bosch (Creative Commons), background <a href="https://science.nasa.gov/mission/hubble/">Hubble Space Telescope</a> image: NASA / ESA </figcaption>
 </figure>
@@ -254,7 +254,7 @@ like a <a href="https://science.nasa.gov/asset/hubble/galaxy-ngc-1277/">frozen r
 black hole may have largely finished growing before its host galaxy did.</p>
 
 <figure class="fig">
-  <img src="/assets/SDSSperseus.png" alt="The Perseus galaxy cluster imaged by the Sloan Digital Sky Survey" />
+  <img src="/assets/SDSSperseus.webp" alt="The Perseus galaxy cluster imaged by the Sloan Digital Sky Survey" loading="lazy" decoding="async" />
   <figcaption>The Perseus cluster (SDSS). <a class="egg" href="https://ahornberg.bandcamp.com/track/ngc-1277">NGC 1277</a> is one of its compact members.</figcaption>
 </figure>
 
@@ -709,7 +709,7 @@ context in which the close-up measurements above make sense.</p>
 </ol>
 
 <figure class="fig">
-  <img src="/assets/HETlongslit.jpg" alt="Long-slit spectra from the Hobby-Eberly Telescope Massive Galaxy Survey" />
+  <img src="/assets/HETlongslit.jpg" alt="Long-slit spectra from the Hobby-Eberly Telescope Massive Galaxy Survey" loading="lazy" decoding="async" />
   <figcaption>Long-slit spectra from the HET Massive Galaxy Survey: 1,022 galaxies observed to find the best black-hole targets.</figcaption>
 </figure>
 
@@ -721,6 +721,21 @@ them turned black holes from one-off curiosities into a measured population:
 most on a common relation, the exceptions just as telling about how galaxies
 grow. The data are public, the code lives on in its successors, and the
 weighing continues.</p>
+
+<script>
+// Accessibility: honor prefers-reduced-motion by not autoplaying the orbit
+// animations. Visitors without the preference are unaffected; the video keeps
+// its native controls so the content stays reachable either way.
+if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('video[autoplay]').forEach(function (v) {
+    v.removeAttribute('autoplay'); v.removeAttribute('loop'); v.pause();
+  });
+  document.querySelectorAll('iframe[src*="autoplay=1"]').forEach(function (f) {
+    f.src = f.src.replace('autoplay=1', 'autoplay=0');
+  });
+}
+</script>
+
 
   </div>
 
