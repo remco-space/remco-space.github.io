@@ -55,19 +55,19 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>The Peachtree Audio Decco (2007) is known for its excellent sound, and has two
-limitations. The USB input port is prone to breaking. Mine broke twice. Didn’t
-bother to fix it the second time. And volume and input selection need to be
-manually adjusted after powering on.</p>
+    <p>The Peachtree Audio Decco (2007) still sounds great to me, but there are two
+things I wanted to improve. The USB input port is prone to breaking. Mine failed
+twice. The second time, I didn’t want to send it back to the manufacturer… And
+the volume and input selection need to be manually adjusted after powering on. It
+takes about 20 seconds for it to warm up before the volume dial can be turned up.</p>
 
 <p>The first one has an easy answer: ignore the USB port and use a Raspberry Pi with
 a <a href="https://www.hifiberry.com/shop/boards/dacplus-dsp/">HiFiBerry DAC</a> HAT into one
 of the analogue inputs instead.</p>
 
 <p>The second one is the interesting one. Music starts playing, and the amplifier is
-off. Turning it on takes thirty seconds, because the analog tube needs to warm up.
-I have no patience to walk to the amplifier and turn it on and stand around for 30
-seconds. Automate everything.</p>
+off. The whole ritual of turning it on takes thirty seconds. And the volume is
+zero when first powered on. And hence I wanted to automate it.</p>
 
 <h2 id="two-raspberry-pis">Two Raspberry Pis</h2>
 
@@ -88,10 +88,7 @@ rebuilding the whole operating system.</p>
 off the Pi entirely.</strong> The Pi 3 now runs ordinary Raspberry Pi OS, where all of it
 is just a package. The HiFiBerry DAC, LIRC and the IR LED, and
 <a href="https://github.com/mikebrady/shairport-sync">shairport-sync</a> in a container for
-AirPlay. One Pi. No SSH.</p>
-
-<p>The dev build of shairport-sync is the one running, pulled fresh every week. It
-works for me (tm), and is better than the stable version.</p>
+AirPlay. Both functions on one device.</p>
 
 <h2 id="inside-the-amplifier">Inside the amplifier</h2>
 
@@ -100,11 +97,8 @@ works for me (tm), and is better than the stable version.</p>
 <p><img src="/assets/decco-pi-inside.webp" alt="The Pi 3 and HiFiBerry DAC mounted inside the Decco's housing, beside the transformer and the tube" /></p>
 
 <p>The IR LED points directly at the Decco’s own receiver from a few centimetres
-away, which makes the whole question of infrared range disappear. No transistor,
-no resistor, no line of sight across a room.</p>
-
-<p>Nothing about the amplifier was modified. It still thinks it is being operated by
-its remote control, by someone with very consistent habits.</p>
+away. At this range, we do not need a transistor or a resistor to trigger it.
+Nothing about the amplifier itself was modified.</p>
 
 <h2 id="the-remote-configs">The remote configs</h2>
 
@@ -112,18 +106,17 @@ its remote control, by someone with very consistent habits.</p>
 
 <ul>
   <li><strong><code class="language-plaintext highlighter-rouge">decco.lircd.conf</code></strong> — the Peachtree Audio Decco remote</li>
-  <li><strong><code class="language-plaintext highlighter-rouge">predac.lircd.conf</code></strong> — the Peachtree Audio preDac remote, a different amplifier</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">predac.lircd.conf</code></strong> — the Peachtree Audio preDac remote</li>
 </ul>
 
 <p>The Decco one is not mine to begin with. It started as the config Nick Touran
 published at
 <a href="https://partofthething.com/thoughts/a-lirc-config-file-for-the-peachtree-audio-decco-ir-remote-control/">Part of the Thing</a>,
 who did the original capture and the <code class="language-plaintext highlighter-rouge">irrecord</code> work. Without that file this
-project would not have started at all. It had one flaw: holding volume made the
-motor drive stutter instead of sweeping. I asked in the comments there, years ago,
-whether LIRC’s <code class="language-plaintext highlighter-rouge">repeat</code> parameter was the answer, and never found out.</p>
+project would not have started at all. It had one issue: holding volume made the
+motor drive stutter instead of sweeping.</p>
 
-<p>It was. My own remote was broken by then, so I soldered bodge wires across it,
+<p>My own remote was broken by then, so I soldered bodge wires across it,
 re-recorded it with <code class="language-plaintext highlighter-rouge">irrecord</code>, and the new capture came back with a <code class="language-plaintext highlighter-rouge">repeat</code>
 header the original does not have, and a gap of 108530 against the original’s</p>
 <ol>
@@ -135,19 +128,15 @@ has ever been published anywhere.</p>
 
 <h2 id="small-things">Small things</h2>
 
-<p>Home Assistant can toggle the amplifier by hand.</p>
-
-<p>Volume is set by firing <code class="language-plaintext highlighter-rouge">VOL_UP</code> at the amplifier eighteen times. Not exactly
-eighteen: the count is drawn from a Gaussian around it, so it is usually seventeen
-or nineteen.</p>
+<p>When starting up, the volume knob does not move to exactly the same spot every
+time, to try to not wear the potentiometer out.</p>
 
 <p>When silence has run for a while, the amplifier switches to an unused input, then
-to another one, before shutting down. This is a warning shot. Nobody asked for it.</p>
+to another one, before shutting down. This gives a physical indicator that the
+amplifier will shut off soon.</p>
 
-<p>On every restart the Pi cycles the amplifier through all five inputs and back, to
-signal that it has restarted. The Pi reboots overnight, by which time the
-amplifier has been off for hours and is not listening. The signal is sent anyway,
-every day, to a switched-off amplifier.</p>
+<p>It has Home Assistant integration, to automate the amplifier at home and track
+stats.</p>
 
 <p>The code, both configs, and the wiring are in
 <a href="https://github.com/remco-space/Peachtree_Decco_hifiberry_IR">Peachtree_Decco_hifiberry_IR</a>.</p>
