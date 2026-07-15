@@ -1,1 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://remco.space/feed.xml" rel="self" type="application/atom+xml" /><link href="https://remco.space/" rel="alternate" type="text/html" /><updated>2026-07-14T08:26:19+00:00</updated><id>https://remco.space/feed.xml</id><title type="html">remco.space</title><subtitle>Intergalactic space between Milliways, the TVA and the Galactic Center of the Universe.</subtitle><author><name>remco dot space</name></author></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://remco.space/feed.xml" rel="self" type="application/atom+xml" /><link href="https://remco.space/" rel="alternate" type="text/html" /><updated>2026-07-15T10:52:10+00:00</updated><id>https://remco.space/feed.xml</id><title type="html">remco.space</title><subtitle>Intergalactic space between Milliways, the TVA and the Galactic Center of the Universe.</subtitle><author><name>remco dot space</name></author><entry><title type="html">Automating a 2007 Peachtree Decco amplifier</title><link href="https://remco.space/2026/07/15/automating-a-peachtree-decco-amplifier.html" rel="alternate" type="text/html" title="Automating a 2007 Peachtree Decco amplifier" /><published>2026-07-15T00:00:00+00:00</published><updated>2026-07-15T00:00:00+00:00</updated><id>https://remco.space/2026/07/15/automating-a-peachtree-decco-amplifier</id><content type="html" xml:base="https://remco.space/2026/07/15/automating-a-peachtree-decco-amplifier.html"><![CDATA[<p>The Peachtree Audio Decco (2007) is known for its excellent sound, and has two
+limitations. The USB input port is prone to breaking. Mine broke twice. Didn’t
+bother to fix it the second time. And volume and input selection need to be
+manually adjusted after powering on.</p>
+
+<p>The first one has an easy answer: ignore the USB port and use a Raspberry Pi with
+a <a href="https://www.hifiberry.com/shop/boards/dacplus-dsp/">HiFiBerry DAC</a> HAT into one
+of the analogue inputs instead.</p>
+
+<p>The second one is the interesting one. Music starts playing, and the amplifier is
+off. Turning it on takes thirty seconds, because the analog tube needs to warm up.
+I have no patience to walk to the amplifier and turn it on and stand around for 30
+seconds. Automate everything.</p>
+
+<h2 id="two-raspberry-pis">Two Raspberry Pis</h2>
+
+<p>The first version used two. A Pi Zero 2W with an infrared LED, impersonating the
+remote control. A Pi 3 running HiFiBerryOS with the DAC. The Zero logged into the
+Pi 3 over SSH to ask whether ALSA was playing anything, and if it was, blinked the
+amplifier awake.</p>
+
+<p><img src="/assets/decco-pi-outside.webp" alt="The Decco with a Pi Zero 2W and an IR LED sitting outside it" /></p>
+
+<p>It worked. It was also two computers doing one computer’s job. The obvious
+consolidation was to move the IR LED onto the Pi that already had the DAC, and
+that is where it stalls: HiFiBerryOS is built with buildroot, and a buildroot
+image contains what it was built with. LIRC is not in it. Adding LIRC means
+rebuilding the whole operating system.</p>
+
+<p>So the consolidation went the other way. Not LIRC onto HiFiBerryOS: <strong>HiFiBerryOS
+off the Pi entirely.</strong> The Pi 3 now runs ordinary Raspberry Pi OS, where all of it
+is just a package. The HiFiBerry DAC, LIRC and the IR LED, and
+<a href="https://github.com/mikebrady/shairport-sync">shairport-sync</a> in a container for
+AirPlay. One Pi. No SSH.</p>
+
+<p>The dev build of shairport-sync is the one running, pulled fresh every week. It
+works for me (tm), and is better than the stable version.</p>
+
+<h2 id="inside-the-amplifier">Inside the amplifier</h2>
+
+<p>There is room in the case, so that is where it went.</p>
+
+<p><img src="/assets/decco-pi-inside.webp" alt="The Pi 3 and HiFiBerry DAC mounted inside the Decco's housing, beside the transformer and the tube" /></p>
+
+<p>The IR LED points directly at the Decco’s own receiver from a few centimetres
+away, which makes the whole question of infrared range disappear. No transistor,
+no resistor, no line of sight across a room.</p>
+
+<p>Nothing about the amplifier was modified. It still thinks it is being operated by
+its remote control, by someone with very consistent habits.</p>
+
+<h2 id="the-remote-configs">The remote configs</h2>
+
+<p>Both LIRC config files are in the repo, recorded from the original handsets:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">decco.lircd.conf</code></strong> — the Peachtree Audio Decco remote</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">predac.lircd.conf</code></strong> — the Peachtree Audio preDac remote, a different amplifier</li>
+</ul>
+
+<p>The Decco one is not mine to begin with. It started as the config Nick Touran
+published at
+<a href="https://partofthething.com/thoughts/a-lirc-config-file-for-the-peachtree-audio-decco-ir-remote-control/">Part of the Thing</a>,
+who did the original capture and the <code class="language-plaintext highlighter-rouge">irrecord</code> work. Without that file this
+project would not have started at all. It had one flaw: holding volume made the
+motor drive stutter instead of sweeping. I asked in the comments there, years ago,
+whether LIRC’s <code class="language-plaintext highlighter-rouge">repeat</code> parameter was the answer, and never found out.</p>
+
+<p>It was. My own remote was broken by then, so I soldered bodge wires across it,
+re-recorded it with <code class="language-plaintext highlighter-rouge">irrecord</code>, and the new capture came back with a <code class="language-plaintext highlighter-rouge">repeat</code>
+header the original does not have, and a gap of 108530 against the original’s</p>
+<ol>
+  <li>The volume is smooth now. Both values are in <code class="language-plaintext highlighter-rouge">decco.lircd.conf</code>.</li>
+</ol>
+
+<p>The preDac config is there because, as far as I can tell, no preDac LIRC config
+has ever been published anywhere.</p>
+
+<h2 id="small-things">Small things</h2>
+
+<p>Home Assistant can toggle the amplifier by hand.</p>
+
+<p>Volume is set by firing <code class="language-plaintext highlighter-rouge">VOL_UP</code> at the amplifier eighteen times. Not exactly
+eighteen: the count is drawn from a Gaussian around it, so it is usually seventeen
+or nineteen.</p>
+
+<p>When silence has run for a while, the amplifier switches to an unused input, then
+to another one, before shutting down. This is a warning shot. Nobody asked for it.</p>
+
+<p>On every restart the Pi cycles the amplifier through all five inputs and back, to
+signal that it has restarted. The Pi reboots overnight, by which time the
+amplifier has been off for hours and is not listening. The signal is sent anyway,
+every day, to a switched-off amplifier.</p>
+
+<p>The code, both configs, and the wiring are in
+<a href="https://github.com/remco-space/Peachtree_Decco_hifiberry_IR">Peachtree_Decco_hifiberry_IR</a>.</p>]]></content><author><name>remco dot space</name></author><summary type="html"><![CDATA[Waking a Peachtree Audio Decco with a Raspberry Pi, a HiFiBerry DAC and an IR LED mounted inside the amplifier — and the LIRC configs for the Decco and preDac remotes.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://remco.space/assets/decco-pi-inside.webp" /><media:content medium="image" url="https://remco.space/assets/decco-pi-inside.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
