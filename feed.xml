@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://remco.space/feed.xml" rel="self" type="application/atom+xml" /><link href="https://remco.space/" rel="alternate" type="text/html" /><updated>2026-07-15T11:46:39+00:00</updated><id>https://remco.space/feed.xml</id><title type="html">remco.space</title><subtitle>Intergalactic space between Milliways, the TVA and the Galactic Center of the Universe.</subtitle><author><name>remco dot space</name></author><entry><title type="html">Automating a 2007 Peachtree Decco amplifier</title><link href="https://remco.space/2025/03/23/automating-a-peachtree-decco-amplifier.html" rel="alternate" type="text/html" title="Automating a 2007 Peachtree Decco amplifier" /><published>2025-03-23T00:00:00+00:00</published><updated>2025-03-23T00:00:00+00:00</updated><id>https://remco.space/2025/03/23/automating-a-peachtree-decco-amplifier</id><content type="html" xml:base="https://remco.space/2025/03/23/automating-a-peachtree-decco-amplifier.html"><![CDATA[<p>The Peachtree Audio Decco (2007) still sounds great to me, but there are two
-things I wanted to improve. The USB input port is prone to breaking. Mine failed
-twice. The second time, I didn’t want to send it back to the manufacturer… And
-the volume and input selection need to be manually adjusted after powering on. It
-takes about 20 seconds for it to warm up before the volume dial can be turned up.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://remco.space/feed.xml" rel="self" type="application/atom+xml" /><link href="https://remco.space/" rel="alternate" type="text/html" /><updated>2026-07-15T11:53:25+00:00</updated><id>https://remco.space/feed.xml</id><title type="html">remco.space</title><subtitle>Intergalactic space between Milliways, the TVA and the Galactic Center of the Universe.</subtitle><author><name>remco dot space</name></author><entry><title type="html">Automating a 2007 Peachtree Decco amplifier</title><link href="https://remco.space/2025/03/23/automating-a-peachtree-decco-amplifier.html" rel="alternate" type="text/html" title="Automating a 2007 Peachtree Decco amplifier" /><published>2025-03-23T00:00:00+00:00</published><updated>2025-03-23T00:00:00+00:00</updated><id>https://remco.space/2025/03/23/automating-a-peachtree-decco-amplifier</id><content type="html" xml:base="https://remco.space/2025/03/23/automating-a-peachtree-decco-amplifier.html"><![CDATA[<p>The Peachtree Audio Decco (2007) still sounds great to me, but there are two
+things I wanted to improve. The USB input port on the one I have is broken. It
+failed twice. The second time, I didn’t want to send it back to the manufacturer
+again… Additionally, the volume and input selection need to be manually adjusted
+every time after powering on. It takes about 20 seconds for it to warm up before
+the volume dial can be turned up.</p>
 
 <p>The first one has an easy answer: ignore the USB port and use a Raspberry Pi with
 a <a href="https://www.hifiberry.com/shop/boards/dacplus-dsp/">HiFiBerry DAC</a> HAT into one
 of the analogue inputs instead.</p>
 
-<p>The second one is the interesting one. Music starts playing, and the amplifier is
-off. The whole ritual of turning it on takes thirty seconds. And the volume is
-zero when first powered on. And hence I wanted to automate it.</p>
+<p>The second one is a more fun one. Upon cold start, music starts playing, but the
+amplifier is still off, and the volume dial is all the way down. The whole ritual
+of turning it on takes thirty seconds. Hence I wanted to automate it.</p>
 
 <h2 id="two-raspberry-pis">Two Raspberry Pis</h2>
 
